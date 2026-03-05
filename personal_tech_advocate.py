@@ -9,6 +9,7 @@ desenvolvedor, focado em vagas de Análise e Ciência de Dados.
 # PASSO 1 — Importação de bibliotecas
 # ============================================================
 from agno.agent import Agent
+from agno.db.sqlite import SqliteDb
 from agno.models.google import Gemini
 from agno.tools.github import GithubTools
 from dotenv import load_dotenv
@@ -23,12 +24,13 @@ load_dotenv()
 # O Agno já fornece uma tool pronta que faz dezenas de operações no GitHub.
 ferramenta_github = GithubTools(
     # Quais poderes daremos ao agente?
-    search_repositories=True, # 🔍 Permite ao agente buscar repositórios
-    get_repository=True, # 📦 Permite acessar os detalhes de um repo específico
-    read_repository_file=True, # 🔥 O agente poderá LER seus arquivos (ex: README)
-    list_pull_requests=False, # ❌ Desativado (não analisaremos Pull Requests)
-    list_issues=False, # ❌ Desativado (não analisaremos Issues no repositório)
-    list_user_repositories=True, # 👤 Permite listar TODOS os seus repositórios
+    # Para economizar, listamos apenas as ferramentas que ele vai precisar usar:
+    include_tools=[
+        "search_repositories", # 🔍 Permite ao agente buscar repositórios
+        "get_repository", # 📦 Permite acessar os detalhes de um repo específico
+        "get_file_content", # 🔥 O agente poderá LER seus arquivos (ex: README)
+        "list_repositories", # 👤 Permite listar TODOS os seus repositórios
+    ]
 )
 
 
@@ -39,13 +41,23 @@ agente = Agent(
     # --- Modelo de IA ---
     model=Gemini(id="gemini-2.5-flash"),
 
+    # --- Memória (Para ter um Chat Contínuo) ---
+    db=SqliteDb(db_file="agente_memoria.db"),
+    session_id="analise_rh_leoserpa",
+    add_history_to_context=True,
+
     # --- Ferramentas disponíveis para o agente ---
     tools=[ferramenta_github],
 
     # --- Instruções de comportamento do agente ---
     instructions=[
-        "Você é o 'Personal Tech Advocate', um especialista em apresentar "
+        "Você é o 'Personal Tech Advocate', um especialista em recrutar e apresentar "
         "desenvolvedores para recrutadores de tecnologia.",
+        "Sua função principal é ser o tradutor oficial entre o mundo técnico da Ciência de Dados/IA "
+        "e os visitantes que buscam entender o valor dos projetos (recrutadores, gestores ou entusiastas).",
+        "Você deve ser profissional, didático, entusiasmado e focado em resultados.",
+        "IMPORTANTE: Você deve analisar EXCLUSIVAMENTE o portfólio do usuário solicitado.",
+        "Não analise, não busque e não mencione repositórios de outras pessoas.",
         "Seu fluxo de trabalho DEVE ser:",
         "  1. Buscar a lista de repositórios do usuário solicitado.",
         "  2. Escolher os 3 repositórios mais focados em Dados/Python/SQL.",
@@ -69,8 +81,13 @@ agente = Agent(
 # PASSO 4 — Execução do agente
 # ============================================================
 if __name__ == "__main__":
-    usuario = "leoserpa"
+    print("====================================")
+    print("🤖 Personal Tech Advocate (Com Memória)")
+    print("====================================")
+    print("Dica Inicial:")
+    print("Para começar, copie e cole a mensagem abaixo:")
+    print("-> Analise o perfil do GitHub de 'leoserpa' e verifique ATIVAMENTE se eu tenho menção a 'Power BI' ou 'Dashboards'.")
+    print("Depois que ele responder, faça qualquer outra pergunta sobre a análise!\n")
 
-    agente.print_response(
-        f"Analise o perfil do GitHub do usuário '{usuario}' e gere o relatório."
-    )
+    # O cli_app transforma o agente num chat interativo (looping contínuo) automático.
+    agente.cli_app(markdown=True)

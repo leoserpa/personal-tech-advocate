@@ -9,6 +9,7 @@ dependencies = [
     "google-genai>=1.65.0",
     "pygithub>=2.8.1",
     "python-dotenv>=1.2.2",
+    "sqlalchemy>=2.0.48",
 ]
 
 [dependency-groups]
