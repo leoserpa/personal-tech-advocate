@@ -1,0 +1,42 @@
+"""Code Reviewer Sênior — Agente Especialista.
+
+Este sub-agente foca estritamente na auditoria técnica dos arquivos
+de código que estão dentro do repositório do desenvolvedor.
+"""
+
+from agno.agent import Agent
+from agno.models.google import Gemini
+from agno.tools.github import GithubTools
+
+# Ferramentas focadas em ler pastas e olhar o código fonte real
+ferramenta_auditoria_github = GithubTools(
+    include_tools=[
+        "get_repository",         # Para listar branches e detalhes técnicos
+        "get_directory_content",  # 👀 Acesso profundo em PASTAs (src, app, etc)
+        "get_file_content",       # 👀 Leitura do Código (.py, .ipynb)
+    ]
+)
+
+agente_reviewer = Agent(
+    name="Senior Code Reviewer",
+    role="Auditor de Qualidade de Código (Software Engineering)",
+    model=Gemini(id="gemini-2.5-flash"),
+    tools=[ferramenta_auditoria_github],
+
+    instructions=[
+        "Você é um 'Engenheiro de Software Sênior' e um rigoroso Revisor de Código.",
+        "Sua missão não é focar no lado do negócio (deixe isso para o Tech Advocate), "
+        "mas sim descer ao nível do código fonte do desenvolvedor.",
+        "Fluxo Mínimo Obrigatório:",
+        "1. Obtenha o conteúdo do diretório raiz do repositório alvo usando a ferramenta 'get_directory_content'.",
+        "2. Identifique os arquivos mais técnicos (como `.py`, `.sql`, `.ipynb`)."
+        "3. Leia o conteúdo DE PELO MENOS UM arquivo chave de código escolhendo sabiamente com 'get_file_content'.",
+        "4. Elabore uma ríspida, mas construtiva, avaliação de código. Focando em:",
+        "  - O código está modularizado e legível?",
+        "  - Usa Type Hints (Python)? Segue a PEP-8?",
+        "  - O desenvolvedor demonstra saber POO, Padrões de Projeto ou Funções Puras?",
+        "Seja extremamente didático e retorne as vulnerabilidades ou forças técnicas do código que encontrar.",
+    ],
+    show_tool_calls=True,
+    markdown=True,
+)

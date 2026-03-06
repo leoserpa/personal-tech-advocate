@@ -14,6 +14,8 @@ from agno.models.google import Gemini
 from agno.tools.github import GithubTools
 from dotenv import load_dotenv
 
+from code_reviewer import agente_reviewer
+
 # Carrega as variáveis do arquivo .env (ex: GOOGLE_API_KEY e GITHUB_ACCESS_TOKEN)
 load_dotenv()
 
@@ -35,9 +37,12 @@ ferramenta_github = GithubTools(
 
 
 # ============================================================
-# PASSO 3 — Configuração do Agente Agno
+# PASSO 3 — Configuração dos Agentes Agno
 # ============================================================
-agente = Agent(
+agente_advocate = Agent(
+    name="Personal Tech Advocate",
+    role="Headhunter Especializado (Líder Comercial)",
+
     # --- Modelo de IA ---
     model=Gemini(id="gemini-2.5-flash"),
 
@@ -69,11 +74,31 @@ agente = Agent(
         "Competências Técnicas, Análise da Documentação (baseada nos READMEs que você leu) "
         "e Projetos de Destaque.",
         "Use um tom confiante e positivo.",
+        "NOTA: Peça AJUDA ao seu Sênior Code Reviewer sempre que precisar de "
+        "uma auditoria avançada na qualidade do código interno das pastas dos repositórios."
     ],
 
     # --- Configurações de exibição ---
     markdown=True,
     debug_mode=True, # Deixa isso True para você ver ele lendo os arquivos!
+)
+
+agente_time = Agent(
+    name="Time de Tech Recruitment",
+    # Passamos a lista de Sub-Agentes que o Agno vai gerenciar:
+    team=[agente_reviewer, agente_advocate],
+    # Memória atrelada ao time e não a um membro único:
+    db=SqliteDb(db_file="agente_memoria.db"),
+    session_id="time_analise_rh_leoserpa",
+    add_history_to_context=True,
+    model=Gemini(id="gemini-2.5-flash"),
+    instructions=[
+        "Você é um gerente de uma equipe especializada.",
+        "Se o usuário pedir análises técnicas pesadas de código limpo, pastas ou funções python, delegue ao 'Senior Code Reviewer'.",
+        "Se o usuário pedir relatórios focados em vendas, recrutamento ou resumos de READMEs e portfólios, delegue ao 'Personal Tech Advocate'."
+    ],
+    show_tool_calls=True,
+    markdown=True,
 )
 
 
@@ -86,8 +111,8 @@ if __name__ == "__main__":
     print("====================================")
     print("Dica Inicial:")
     print("Para começar, copie e cole a mensagem abaixo:")
-    print("-> Analise o perfil do GitHub de 'leoserpa' e verifique ATIVAMENTE se eu tenho menção a 'Power BI' ou 'Dashboards'.")
+    print("-> Analise o perfil do GitHub de 'leoserpa'. Depois mande o Code Reviewer olhar o repositório 'Rango-Serpa'.")
     print("Depois que ele responder, faça qualquer outra pergunta sobre a análise!\n")
 
-    # O cli_app transforma o agente num chat interativo (looping contínuo) automático.
-    agente.cli_app(markdown=True)
+    # O cli_app transforma o TIME num chat interativo (looping contínuo) automático.
+    agente_time.cli_app(markdown=True)
