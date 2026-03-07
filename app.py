@@ -35,7 +35,7 @@ if "messages" not in st.session_state:
 
     # Mensagem Oficial de Saudação
     st.session_state.messages.append(
-        {"role": "assistant", "content": "Olá! Digite o nome de usuário do GitHub ou faça uma pergunta sobre as análises anteriores que eu posso te audar!"}
+        {"role": "assistant", "content": "Olá! Digite o nome de usuário do GitHub ou faça uma pergunta sobre as análises anteriores que eu posso te ajudar!"}
     )
 
 # Renderiza todo o histórico salvo na tela a cada re-load

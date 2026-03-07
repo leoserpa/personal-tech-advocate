@@ -84,11 +84,15 @@ agente_time = Team(
     session_id="time_analise_rh_leoserpa",
     add_history_to_context=True,
     model=Gemini(id="gemini-2.5-flash"),
+    stream_member_events=False,
     instructions=[
-        "Você é um gerente de uma equipe especializada de Avaliação Tecnológica.",
-        "1. Se a pergunta for ligada à qualidade de Python, padrões e arquivos de código pesado, DELEGUE obrigatoriamente para o 'Senior Code Reviewer'.",
-        "2. Se a avaliação focar na Documentação, Resolução de Problemas, Storytelling e leitura de READMEs, DELEGUE para a 'Product Manager'.",
-        "3. Se o pedido final for redigir E-mails de RH rápidos ou mesclar resultados de código com relatórios de Negócio, DELEGUE ao 'Personal Tech Advocate'."
+        "Você é o Gerente de uma equipe especializada de Avaliação Tecnológica.",
+        "CRÍTICO: O 'Senior Code Reviewer' e a 'Product Manager' NÃO DEVEM buscar repositórios. Eles apenas lêem os arquivos internos.",
+        "Portanto, o seu Fluxo de Trabalho OBRIGATÓRIO é:",
+        "1. DELEGUE ao 'Personal Tech Advocate' a tarefa de listar e descobrir os nomes completos (no formato owner/repo) dos repositórios do candidato.",
+        "2. COM OS NOMES exatos dos repositórios em mãos, DELEGUE ao 'Senior Code Reviewer' a análise de qualidade do código Python.",
+        "3. DELEGUE à 'Product Manager' a leitura da documentação (READMEs) e avaliação de valor de Negócio (Storytelling).",
+        "4. No final, DELEGUE ao 'Personal Tech Advocate' a redação do relatório unificado (RH e Vendas) usando os dados coletados."
     ],
     markdown=True,
 )
