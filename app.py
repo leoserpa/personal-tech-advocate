@@ -70,7 +70,7 @@ if "messages" not in st.session_state:
 agente_time.session_id = st.session_state.session_id
 
 # Helper para renderizar radar chart:
-def renderizar_grafico_se_existir(texto_completo):
+def preparar_grafico_e_texto(texto_completo):
     # Procura a tag mágica e extrai o dicionário python que o LLM cuspiu. Ex: {'Python': 8, 'SQL': 4}
     match = re.search(r'\[GRAFICO\]\s*(\{.*?\})', texto_completo, re.DOTALL)
     if match:
@@ -98,33 +98,36 @@ def renderizar_grafico_se_existir(texto_completo):
                 showlegend=False,
                 margin={"l": 40, "r": 40, "t": 20, "b": 20}
             )
-            st.plotly_chart(fig, use_container_width=True)
 
             # Corta a parte matemática feia pra não poluir o visual do texto no Chat
             texto_limpo = re.sub(r'\[GRAFICO\]\s*\{.*?\}', '', texto_completo, flags=re.DOTALL)
-            return texto_limpo
+            return texto_limpo, fig
         except Exception:
-            return texto_completo # Retorna limpo se der problema de Parsing
-    return texto_completo
+            return texto_completo, None # Retorna limpo se der problema de Parsing
+    return texto_completo, None
 
 # Renderiza todo o histórico salvo na tela a cada re-load
 for msg in st.session_state.messages:
     with st.chat_message(msg["role"]):
         if msg["role"] == "assistant":
             # Extrai e exibe o plot se houver, e retorna o texto bonitinho
-            texto_formatado = renderizar_grafico_se_existir(msg["content"])
+            texto_formatado, fig = preparar_grafico_e_texto(msg["content"])
             st.markdown(texto_formatado)
+            if fig:
+                st.plotly_chart(fig, use_container_width=True)
         else:
             st.markdown(msg["content"])
 
 # Render botão de download para a última análise feita pelo Agente (se houver)
 erros_de_bem_vindo = ["Olá! Digite o nome de usuário do GitHub", "Olá!"]
 if st.session_state.messages and st.session_state.messages[-1]["role"] == "assistant":
-    ultimo_texto = st.session_state.messages[-1]["content"]
-    if not any(ultimo_texto.startswith(b) for b in erros_de_bem_vindo):
+    ultimo_texto_bruto = st.session_state.messages[-1]["content"]
+    ultimo_texto_limpo, _ = preparar_grafico_e_texto(ultimo_texto_bruto)
+
+    if not any(ultimo_texto_bruto.startswith(b) for b in erros_de_bem_vindo):
         st.download_button(
             label="📥 Baixar Última Análise em PDF",
-            data=criar_pdf(ultimo_texto),
+            data=criar_pdf(ultimo_texto_limpo),
             file_name="Analise_Tech_Advocate.pdf",
             mime="application/pdf",
             use_container_width=True
@@ -163,10 +166,12 @@ if prompt := st.chat_input("Digite o @username do GitHub ou faça perguntas...")
                     resposta_texto += chunk.content
                     container.markdown(resposta_texto + "▌")
 
-            # Finaliza removendo o Cursor Quadrado e tentando renderizar o Radar Chart Visual
-            texto_final_limpo = renderizar_grafico_se_existir(resposta_texto)
-            container.markdown(texto_final_limpo)
+            # Acabando o streaming, deletamos a caixa animada porque daremos rerun para re-processar e re-exibir limpo
+            container.empty()
 
-    # Salva essa resposta limpinha (sem a parte feia do JSON grafico) na interface para não sumir
-    # e para não quebrar o motor FPDF/Markdown do botão de download!
-    st.session_state.messages.append({"role": "assistant", "content": texto_final_limpo})
+    # Salva essa resposta RAW para o grafico sobreviver na lógica local em reloads futuros
+    st.session_state.messages.append({"role": "assistant", "content": resposta_texto})
+
+    # MUITO IMPORTANTE: Aciona reload forçado da página para recarregar o botão de baixar PDF
+    # que foi pulado no topo do fluxo processual pelo Streamlit.
+    st.rerun()
