@@ -63,8 +63,8 @@ agente_advocate = Agent(
         "Você DEVE chamar o seu 'Product Manager' para ler a documentação do repositório (Business Value) "
         "e também o seu 'Senior Code Reviewer' para auditar a qualidade real do código do candidato (Technical Hard Skills).",
         "Após os dois especialistas retornarem os relatórios detalhados para você, SUA MISSÃO é "
-        "unificar tudo num relatório impecável e extremamente bem-escrito, vendendo o candidato "
-        "para uma vaga na área de Análise de Dados.",
+        "unificar tudo num relatório impecável, EXTREMAMENTE DETALHADO, verboso e bem-escrito, vendendo o candidato "
+        "para uma vaga na área de Análise de Dados. NÃO resuma demais. Mantenha as citações profundas sobre os repositórios avaliados.",
         "Organize o Resumo Executivo contemplando: "
         "- Forças de Produto (O que o PM avaliou no README e na comunicação). "
         "Se houver uma 'DESCRIÇÃO DE VAGA' fornecida pelo usuário no chat, cruze os relatórios recebidos com a vaga e adicione um 'Match SCORE (0 a 100%)' no topo do Veredito.",
@@ -97,9 +97,10 @@ agente_time = Team(
         "1. DELEGUE ao 'Personal Tech Advocate' a tarefa de listar e descobrir os nomes completos (no formato owner/repo) dos repositórios do candidato.",
         "2. COM OS NOMES exatos dos repositórios em mãos, DELEGUE ao 'Senior Code Reviewer' a análise de qualidade do código Python.",
         "3. DELEGUE à 'Product Manager' a leitura da documentação (READMEs) e avaliação de valor de Negócio (Storytelling).",
-        "4. No final, DELEGUE ao 'Personal Tech Advocate' a redação do relatório unificado (RH e Vendas) usando os dados coletados.",
+        "4. No final, DELEGUE ao 'Personal Tech Advocate' a redação do relatório unificado (RH e Vendas) usando os dados coletados. EXIJA que ele seja prolixo, detalhista, denso e que não poupe palavras na avaliação das qualidades e defeitos.",
         "5. IMPORTANTE: Se o usuário enviar uma 'DESCRIÇÃO DA VAGA' no chat, exija expressamente que o 'Personal Tech Advocate' analise o aderência técnica e calcule um Score de Match entre o github do candidato e os requisitos da Job.",
-        "6. SUPER CRÍTICO DE SISTEMA! OBRIGATORIAMENTE, no final absoluto da SUA resposta de gerente, repasse SEM ALTERAÇÃO o bloco [GRAFICO] {...} gerado pelo 'Personal Tech Advocate'. Se ele não gerar, crie um baseado no candidato usando o exato formato: [GRAFICO] {'Skill 1': 8, 'Skill 2': 4, ...}. Apenas repasse o dado real do candidato, não copie exemplos antigos!"
+        "6. SUPER CRÍTICO DE SISTEMA! OBRIGATORIAMENTE, no final absoluto da SUA resposta de gerente, repasse SEM ALTERAÇÃO o bloco [GRAFICO] {...} gerado pelo 'Personal Tech Advocate'. Se ele não gerar, crie um baseado no candidato usando o exato formato: [GRAFICO] {'Skill 1': 8, 'Skill 2': 4, ...}. Apenas repasse o dado real do candidato, não copie exemplos antigos!",
+        "7. NUNCA sacrifique a profundidade da sua resposta escrita apenas para gerar o gráfico. O gráfico é apenas a cereja do bolo. Queremos um texto GIGANTE e profissional."
     ],
     markdown=True,
 )
