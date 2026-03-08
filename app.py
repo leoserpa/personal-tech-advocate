@@ -1,4 +1,8 @@
+import json
+import re
+
 import markdown
+import plotly.graph_objects as go
 import streamlit as st
 from dotenv import load_dotenv
 from fpdf import FPDF
@@ -65,10 +69,53 @@ if "messages" not in st.session_state:
 # Garante que o agente na memória ativa do Streamlit rode na sessão correta definida pelo navegador
 agente_time.session_id = st.session_state.session_id
 
+# Helper para renderizar radar chart:
+def renderizar_grafico_se_existir(texto_completo):
+    # Procura a tag mágica e extrai o dicionário python que o LLM cuspiu. Ex: {'Python': 8, 'SQL': 4}
+    match = re.search(r'\[GRAFICO\]\s*(\{.*?\})', texto_completo, re.DOTALL)
+    if match:
+        try:
+            dados_dict = json.loads(match.group(1).replace("'", '"')) # Parseia de JSON String para Objeto Python Puro
+
+            # Montagem estrutural para o Plotly
+            categorias = list(dados_dict.keys())
+            valores = list(dados_dict.values())
+
+            # Precisamos duplicar o primeiro no fim pra "fechar o circulo" da teia
+            categorias.append(categorias[0])
+            valores.append(valores[0])
+
+            fig = go.Figure()
+            fig.add_trace(go.Scatterpolar(
+                r=valores,
+                theta=categorias,
+                fill='toself',
+                name='Senioridade',
+                line_color='#00CC96'
+            ))
+            fig.update_layout(
+                polar={"radialaxis": {"visible": True, "range": [0, 10]}},
+                showlegend=False,
+                margin={"l": 40, "r": 40, "t": 20, "b": 20}
+            )
+            st.plotly_chart(fig, use_container_width=True)
+
+            # Corta a parte matemática feia pra não poluir o visual do texto no Chat
+            texto_limpo = re.sub(r'\[GRAFICO\]\s*\{.*?\}', '', texto_completo, flags=re.DOTALL)
+            return texto_limpo
+        except Exception:
+            return texto_completo # Retorna limpo se der problema de Parsing
+    return texto_completo
+
 # Renderiza todo o histórico salvo na tela a cada re-load
 for msg in st.session_state.messages:
     with st.chat_message(msg["role"]):
-        st.markdown(msg["content"])
+        if msg["role"] == "assistant":
+            # Extrai e exibe o plot se houver, e retorna o texto bonitinho
+            texto_formatado = renderizar_grafico_se_existir(msg["content"])
+            st.markdown(texto_formatado)
+        else:
+            st.markdown(msg["content"])
 
 # Render botão de download para a última análise feita pelo Agente (se houver)
 erros_de_bem_vindo = ["Olá! Digite o nome de usuário do GitHub", "Olá!"]
@@ -116,8 +163,9 @@ if prompt := st.chat_input("Digite o @username do GitHub ou faça perguntas...")
                     resposta_texto += chunk.content
                     container.markdown(resposta_texto + "▌")
 
-            # Finaliza removendo o Cursor Quadrado
-            container.markdown(resposta_texto)
+            # Finaliza removendo o Cursor Quadrado e tentando renderizar o Radar Chart Visual
+            texto_final_limpo = renderizar_grafico_se_existir(resposta_texto)
+            container.markdown(texto_final_limpo)
 
     # Salva essa resposta na interface para não sumir ao recarregar a tela
     st.session_state.messages.append({"role": "assistant", "content": resposta_texto})
