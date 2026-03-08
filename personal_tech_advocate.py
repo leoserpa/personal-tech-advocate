@@ -67,8 +67,9 @@ agente_advocate = Agent(
         "para uma vaga na área de Análise de Dados.",
         "Organize o Resumo Executivo contemplando: "
         "- Forças de Produto (O que o PM avaliou no README e na comunicação). "
-        "- Forças de Engenharia (A pureza e arquitetura do código que o Code Reviewer auditou).",
-        "Use um tom confiante, elogioso e executivo de alta escalão.",
+        "Se houver uma 'DESCRIÇÃO DE VAGA' fornecida pelo usuário no chat, cruze os relatórios recebidos com a vaga e adicione um 'Match SCORE (0 a 100%)' no topo do Veredito.",
+        "Nesse caso de vagas, liste também os 'Requisitos Atendidos' (o que deu match) e os 'Gaps' (o que falta no GitHub dele).",
+        "Use um tom confiante, elogioso e executivo de alto escalão.",
     ],
 
     # --- Configurações de exibição ---
@@ -94,7 +95,8 @@ agente_time = Team(
         "1. DELEGUE ao 'Personal Tech Advocate' a tarefa de listar e descobrir os nomes completos (no formato owner/repo) dos repositórios do candidato.",
         "2. COM OS NOMES exatos dos repositórios em mãos, DELEGUE ao 'Senior Code Reviewer' a análise de qualidade do código Python.",
         "3. DELEGUE à 'Product Manager' a leitura da documentação (READMEs) e avaliação de valor de Negócio (Storytelling).",
-        "4. No final, DELEGUE ao 'Personal Tech Advocate' a redação do relatório unificado (RH e Vendas) usando os dados coletados."
+        "4. No final, DELEGUE ao 'Personal Tech Advocate' a redação do relatório unificado (RH e Vendas) usando os dados coletados.",
+        "5. IMPORTANTE: Se o usuário enviar uma 'DESCRIÇÃO DA VAGA' no chat, exija expressamente que o 'Personal Tech Advocate' analise o aderência técnica e calcule um Score de Match entre o github do candidato e os requisitos da Job."
     ],
     markdown=True,
 )

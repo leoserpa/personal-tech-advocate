@@ -43,6 +43,11 @@ with st.sidebar:
         st.session_state.messages = []
         st.rerun()
 
+    st.markdown("---")
+    st.markdown("### 🎯 Avaliação Específica (Opcional)")
+    st.markdown("Para fazer um *fit* técnico, cole a Job Description (Requisitos) abaixo:")
+    descricao_vaga = st.text_area("Descrição da Vaga", height=150, placeholder="Ex: Sênior Data Engineer. Requisitos: Python, AWS, Snowflake, dbt...")
+
 # --- Componentes Principais da Interface ---
 st.title("Apresente um Candidato")
 
@@ -85,6 +90,16 @@ if prompt := st.chat_input("Digite o @username do GitHub ou faça perguntas...")
     with st.chat_message("user"):
         st.markdown(prompt)
 
+    # Lógica de Empacotamento de Vaga (Invisível na UI para ficar limpo)
+    prompt_enviado_ao_agente = prompt
+    if descricao_vaga.strip():
+        prompt_enviado_ao_agente = (
+            f"O usuário pediu: '{prompt}'.\n\n"
+            f"IMPORTANTE: Você deve avaliar o candidato cruzando seu repósitorio com a seguinte DESCRIÇÃO DE VAGA:\n"
+            f"\"\"\"{descricao_vaga}\"\"\"\n"
+            f"Forneça obrigatoriamente um Match Score (0 a 100%) e liste os Requisitos Atendidos e Gaps."
+        )
+
     # 2. Chama a Inteligência (O Agente)
     with st.chat_message("assistant"):
         # Mostramos um loader de carregamento na UI para ele pensar
@@ -94,8 +109,8 @@ if prompt := st.chat_input("Digite o @username do GitHub ou faça perguntas...")
             resposta_texto = ""
             container = st.empty()
 
-            # Streaming Progressivo: a msg carrega escrevendo em tempo real
-            for chunk in agente_time.run(prompt, stream=True):
+            # Streaming Progressivo usando o prompt turbinado com a Job Description
+            for chunk in agente_time.run(prompt_enviado_ao_agente, stream=True):
                 # Extraimos as sentenças que o bot devolve string a string
                 if isinstance(chunk.content, str):
                     resposta_texto += chunk.content
