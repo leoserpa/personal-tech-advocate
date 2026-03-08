@@ -167,5 +167,6 @@ if prompt := st.chat_input("Digite o @username do GitHub ou faça perguntas...")
             texto_final_limpo = renderizar_grafico_se_existir(resposta_texto)
             container.markdown(texto_final_limpo)
 
-    # Salva essa resposta na interface para não sumir ao recarregar a tela
-    st.session_state.messages.append({"role": "assistant", "content": resposta_texto})
+    # Salva essa resposta limpinha (sem a parte feia do JSON grafico) na interface para não sumir
+    # e para não quebrar o motor FPDF/Markdown do botão de download!
+    st.session_state.messages.append({"role": "assistant", "content": texto_final_limpo})
