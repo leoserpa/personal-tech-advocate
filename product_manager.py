@@ -19,7 +19,7 @@ ferramenta_pm_github = GithubTools(
 agente_pm = Agent(
     name="Product Manager (Negócios)",
     role="Avaliador de Valor de Negócio e Storytelling",
-    model=Gemini(id="gemini-2.5-flash"),
+    model=Gemini(id="gemini-3.1-flash-lite-preview"),
     tools=[ferramenta_pm_github],
 
     instructions=[

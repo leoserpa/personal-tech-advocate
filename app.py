@@ -26,7 +26,7 @@ with st.sidebar:
 
     if st.button("Limpar Histórico", use_container_width=True):
         import uuid
-        agente_time.session_id = str(uuid.uuid4())
+        st.session_state.session_id = str(uuid.uuid4())
         st.session_state.messages = []
         st.rerun()
 
@@ -35,12 +35,17 @@ st.title("Apresente um Candidato")
 
 # Estado de Histórico no UI da Tela
 if "messages" not in st.session_state:
+    import uuid
+    st.session_state.session_id = str(uuid.uuid4())
     st.session_state.messages = []
 
     # Mensagem Oficial de Saudação
     st.session_state.messages.append(
         {"role": "assistant", "content": "Olá! Digite o nome de usuário do GitHub ou faça uma pergunta sobre as análises anteriores que eu posso te ajudar!"}
     )
+
+# Garante que o agente na memória ativa do Streamlit rode na sessão correta definida pelo navegador
+agente_time.session_id = st.session_state.session_id
 
 # Renderiza todo o histórico salvo na tela a cada re-load
 for msg in st.session_state.messages:

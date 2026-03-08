@@ -45,7 +45,7 @@ agente_advocate = Agent(
     role="Headhunter Especializado (Líder Comercial)",
 
     # --- Modelo de IA ---
-    model=Gemini(id="gemini-2.5-flash"),
+    model=Gemini(id="gemini-3.1-flash-lite-preview"),
 
     # --- Memória (Para ter um Chat Contínuo) ---
     db=SqliteDb(db_file="memoria_groq.db"),
@@ -83,7 +83,7 @@ agente_time = Team(
     db=SqliteDb(db_file="memoria_groq.db"),
     session_id="time_analise_rh_leoserpa",
     add_history_to_context=True,
-    model=Gemini(id="gemini-2.5-flash"),
+    model=Gemini(id="gemini-3.1-flash-lite-preview"),
     stream_member_events=False,
     instructions=[
         "Você é o Gerente de uma equipe especializada de Avaliação Tecnológica.",

@@ -20,7 +20,7 @@ ferramenta_auditoria_github = GithubTools(
 agente_reviewer = Agent(
     name="Senior Code Reviewer",
     role="Auditor de Qualidade de Código (Software Engineering)",
-    model=Gemini(id="gemini-2.5-flash"),
+    model=Gemini(id="gemini-3.1-flash-lite-preview"),
     tools=[ferramenta_auditoria_github],
 
     instructions=[
