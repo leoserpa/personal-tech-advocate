@@ -75,6 +75,8 @@ agente_advocate = Agent(
         "SUPER CRÍTICO: Se a vaga exigir uma habilidade (ex: Excel, AWS, VBA) e o candidato NÃO TIVER NENHUMA evidência dela no GitHub, a nota no Radar Chart DEVE SER OBRIGATORIAMENTE 0 (ZERO). Não invente pontuação 4 ou 5 por pena!",
         "Você DEVE usar estritamente este formato sintático visual:",
         "[GRAFICO] {'Sua Skill 1': 8, 'Sua Skill 2': 6, 'Outra Skill': 4, 'Skill 4': 9, 'Skill 5': 7}",
+        "IMEDIATAMENTE ABAIXO do bloco [GRAFICO], você DEVE gerar 3 Perguntas Inéditas e Difíceis de entrevista técnica (com o gabarito) focadas nas maiores fraquezas ou na stack identificada. Siga estritamente esta estrutura de array JSON válido (usando aspas duplas obrigatórias):",
+        "[ENTREVISTA] [{\"pergunta\": \"Sua pergunta difícil aqui?\", \"resposta\": \"O gabarito tecnico aqui\"}]"
     ],
 
     # --- Configurações de exibição ---
@@ -102,8 +104,9 @@ agente_time = Team(
         "3. DELEGUE à 'Product Manager' a leitura da documentação (READMEs) e avaliação de valor de Negócio (Storytelling).",
         "4. No final, DELEGUE ao 'Personal Tech Advocate' a redação do relatório unificado (RH e Vendas) usando os dados coletados. EXIJA que ele seja prolixo, detalhista, denso e que não poupe palavras na avaliação das qualidades e defeitos.",
         "5. IMPORTANTE: Se o usuário enviar uma 'DESCRIÇÃO DA VAGA' no chat, exija expressamente que o 'Personal Tech Advocate' analise o aderência técnica e calcule um Score de Match entre o github do candidato e os requisitos da Job.",
-        "6. SUPER CRÍTICO DE SISTEMA! OBRIGATORIAMENTE, no final absoluto da SUA resposta de gerente, repasse SEM ALTERAÇÃO o bloco [GRAFICO] {...} gerado pelo 'Personal Tech Advocate'. Se ele não gerar, crie um baseado no candidato usando o exato formato: [GRAFICO] {'Skill 1': 8, 'Skill 2': 4, ...}. Apenas repasse o dado real do candidato, não copie exemplos antigos!",
-        "7. NUNCA sacrifique a profundidade da sua resposta escrita apenas para gerar o gráfico. O gráfico é apenas a cereja do bolo. Queremos um texto GIGANTE e profissional."
+        "6. SUPER CRÍTICO DE SISTEMA! OBRIGATORIAMENTE, no final absoluto da SUA resposta de gerente, repasse SEM ALTERAÇÃO os blocos [GRAFICO] {...} e [ENTREVISTA] [...] gerados pelo 'Personal Tech Advocate'.",
+        "É EXPRESSAMENTE PROIBIDO DESTRUIR A FORMATAÇÃO DO JSON DE ENTREVISTA! Você deve garantir que a tag [ENTREVISTA] contenha uma lista de DICIONÁRIOS (com as chaves exatas 'pergunta' e 'resposta'). Jamais converta em texto corrido, bullet points ou lista de strings! Mantenha o formato [{...}, {...}] intacto!",
+        "7. NUNCA sacrifique a profundidade da sua resposta escrita apenas para gerar o gráfico e as entrevistas. Eles são apenas os anexos no final. Queremos um texto GIGANTE e profissional."
     ],
     markdown=True,
 )
