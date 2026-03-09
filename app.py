@@ -134,9 +134,13 @@ for msg in st.session_state.messages:
                 with st.expander("🃏 Cards de Entrevista Técnica (Gabarito)"):
                     st.markdown("Use estas perguntas exclusivas filtradas dos projetos do candidato para testá-lo em entrevistas técnicas:")
                     for i, card in enumerate(entrevista_dados):
-                        # Tolerância a variações do LLM (maiúsculas, minúsculas ou sinônimos base)
-                        p = card.get('pergunta', card.get('Pergunta', card.get('question', 'Pergunta não encontrada')))
-                        r = card.get('resposta', card.get('Resposta', card.get('gabarito', card.get('Gabarito', 'Gabarito não fornecido pelo Agente'))))
+                        if isinstance(card, dict):
+                            # Tolerância a variações do LLM (maiúsculas, minúsculas ou sinônimos base)
+                            p = card.get('pergunta', card.get('Pergunta', card.get('question', 'Pergunta não encontrada')))
+                            r = card.get('resposta', card.get('Resposta', card.get('gabarito', card.get('Gabarito', 'Gabarito não fornecido pelo Agente'))))
+                        else:
+                            p = str(card)
+                            r = "Formato de dicionário inválido retornado pela IA. O gabarito foi fundido na pergunta."
 
                         st.markdown(f"**{i+1}. {p}**")
                         st.info(f"💡 **Gabarito Esperado:** {r}")
