@@ -70,8 +70,10 @@ agente_advocate = Agent(
         "Se houver uma 'DESCRIÇÃO DE VAGA' fornecida pelo usuário no chat, cruze os relatórios recebidos com a vaga e adicione um 'Match SCORE (0 a 100%)' no topo do Veredito.",
         "Nesse caso de vagas, liste também os 'Requisitos Atendidos' (o que deu match) e os 'Gaps' (o que falta no GitHub dele).",
         "Use um tom confiante, elogioso e executivo de alto escalão.",
-        "CRÍTICO OBRIGATÓRIO FINAL: No absoluto final do seu relatório, após dar o seu Veredito, você DEVE pular duas linhas e gerar um bloco JSON contendo 5 habilidades técnicas pontuadas de 1 a 10 BASEADAS RIGOROSAMENTE NA PERFORMANCE DESTE CANDIDATO E NOS GAPS ENCONTRADOS.",
-        "NÃO DE MAX POINTS (10) PARA TUDO! Se o candidato tiver gaps ou o Match Score não for 100%, os números do gráfico OBRIGATORIAMENTE DEVEM flutuar (ex: 4, 6, 8) para refletir imperfeições. Você DEVE usar estritamente este formato sintático visual:",
+        "CRÍTICO OBRIGATÓRIO FINAL: No absoluto final do seu relatório, após dar o seu Veredito, você DEVE pular duas linhas e gerar um bloco JSON contendo 5 habilidades técnicas pontuadas de 0 a 10 BASEADAS RIGOROSAMENTE NA PERFORMANCE DESTE CANDIDATO E NOS GAPS ENCONTRADOS.",
+        "NÃO DE MAX POINTS (10) PARA TUDO! Se o candidato tiver gaps ou o Match Score não for 100%, os números do gráfico OBRIGATORIAMENTE DEVEM flutuar (ex: 4, 6, 8) para refletir imperfeições.",
+        "SUPER CRÍTICO: Se a vaga exigir uma habilidade (ex: Excel, AWS, VBA) e o candidato NÃO TIVER NENHUMA evidência dela no GitHub, a nota no Radar Chart DEVE SER OBRIGATORIAMENTE 0 (ZERO). Não invente pontuação 4 ou 5 por pena!",
+        "Você DEVE usar estritamente este formato sintático visual:",
         "[GRAFICO] {'Sua Skill 1': 8, 'Sua Skill 2': 6, 'Outra Skill': 4, 'Skill 4': 9, 'Skill 5': 7}",
     ],
 
