@@ -134,8 +134,12 @@ for msg in st.session_state.messages:
                 with st.expander("🃏 Cards de Entrevista Técnica (Gabarito)"):
                     st.markdown("Use estas perguntas exclusivas filtradas dos projetos do candidato para testá-lo em entrevistas técnicas:")
                     for i, card in enumerate(entrevista_dados):
-                        st.markdown(f"**{i+1}. {card.get('pergunta', 'Pergunta')}**")
-                        st.info(f"💡 **Gabarito Esperado:** {card.get('resposta', 'Resposta')}")
+                        # Tolerância a variações do LLM (maiúsculas, minúsculas ou sinônimos base)
+                        p = card.get('pergunta', card.get('Pergunta', card.get('question', 'Pergunta não encontrada')))
+                        r = card.get('resposta', card.get('Resposta', card.get('gabarito', card.get('Gabarito', 'Gabarito não fornecido pelo Agente'))))
+
+                        st.markdown(f"**{i+1}. {p}**")
+                        st.info(f"💡 **Gabarito Esperado:** {r}")
         else:
             st.markdown(msg["content"])
 
