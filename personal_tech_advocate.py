@@ -83,7 +83,7 @@ agente_advocate = Agent(
         "Você DEVE usar estritamente este formato sintático visual:",
         "[GRAFICO] {'Sua Skill 1': 8, 'Sua Skill 2': 6, 'Outra Skill': 4, 'Skill 4': 9, 'Skill 5': 7}",
         "IMEDIATAMENTE ABAIXO do bloco [GRAFICO], você DEVE gerar 3 Perguntas Inéditas e Difíceis de entrevista técnica (com o gabarito) focadas nas maiores fraquezas ou na stack identificada. Siga estritamente esta estrutura de array JSON válido (usando aspas duplas obrigatórias):",
-        "[ENTREVISTA] [{\"pergunta\": \"Sua pergunta difícil aqui?\", \"resposta\": \"O gabarito tecnico aqui\"}]",
+        "[ENTREVISTA] [{\"pergunta\": \"Sua pergunta difícil aqui?\", \"resposta\": \"O gabarito tecnico detalhado e profundo aqui. Nao escreva rubricas curtas como 'Avaliar x'\"}]",
         "POR FIM, sua ÚLTIMA TAREFA é formular um 'Cold E-mail' (um InMail sedutor de recrutador) direcionado diretamente ao candidato. Use o nome dele, ressalte um projeto específico incrível que ele construiu no GitHub e faça o 'Call to Action' chamando-o para conversar com sua empresa. Use esta estrutura JSON estrita:",
         "[EMAIL] {\"assunto\": \"O assunto criativo do email\", \"corpo\": \"Olá [Nome], vi seu repositório [Repo] e achei genial a forma como...\"}"
     ],
@@ -112,10 +112,11 @@ agente_time = Team(
         "2. COM OS NOMES exatos dos repositórios em mãos, DELEGUE ao 'Senior Code Reviewer' a análise de qualidade do código Python.",
         "3. DELEGUE à 'Product Manager' a leitura da documentação (READMEs) e avaliação de valor de Negócio (Storytelling).",
         "4. No final, DELEGUE ao 'Personal Tech Advocate' a redação do relatório unificado (RH e Vendas) usando os dados coletados. EXIJA que ele seja prolixo, detalhista, denso e que não poupe palavras na avaliação das qualidades e defeitos.",
-        "5. IMPORTANTE: Se o usuário enviar uma 'DESCRIÇÃO DA VAGA' no chat, exija expressamente que o 'Personal Tech Advocate' analise o aderência técnica e calcule um Score de Match entre o github do candidato e os requisitos da Job.",
-        "6. SUPER CRÍTICO DE SISTEMA! OBRIGATORIAMENTE, no final absoluto da SUA resposta de gerente, repasse SEM ALTERAÇÃO os blocos [GRAFICO] {...}, [ENTREVISTA] [...] e o recém criado [EMAIL] {...} gerados pelo 'Personal Tech Advocate'.",
-        "É EXPRESSAMENTE PROIBIDO DESTRUIR A FORMATAÇÃO DO JSON DE ENTREVISTA OU DO EMAIL! Você deve garantir que a tag [ENTREVISTA] contenha uma lista de DICIONÁRIOS e que a tag [EMAIL] contenha o dicionário de chaves 'assunto' e 'corpo'. Jamais converta em texto corrido ou desestruture as chaves!",
-        "7. NUNCA sacrifique a profundidade da sua resposta escrita apenas para gerar o gráfico e os anexos. Queremos um texto GIGANTE e profissional."
+        "5. IMPORTANTE: Se o usuário enviar uma 'DESCRIÇÃO DA VAGA' no chat, exija expressamente que o 'Personal Tech Advocate' analise a aderência técnica e calcule um Score de Match entre o github do candidato e os requisitos da Job.",
+        "6. SUPER CRÍTICO DE SISTEMA! OBRIGATORIAMENTE, a SUA resposta final de gerente para o usuário DEVE SER A CÓPIA EXATA (100% fiel e sem resumos) do relatório final gerado pelo 'Personal Tech Advocate'.",
+        "Você atua apenas como um repassador na última etapa. NÃO re-escreva o relatório. NÃO mude os títulos `###` que ele usou. NÃO remova nenhum bloco JSON.",
+        "É EXPRESSAMENTE PROIBIDO DESTRUIR A FORMATAÇÃO DO JSON DE GRAFICO, ENTREVISTA OU EMAIL! Repasse as tags [GRAFICO] {...}, [ENTREVISTA] [...] e [EMAIL] {...} EXATAMENTE como o Advocate as gerou, no final puro do seu markdown de resposta.",
+        "7. Lembre-se: O texto GIGANTE e profissional é vital. Se você resumir o trabalho da sua equipe, você será desligado."
     ],
     markdown=True,
 )
