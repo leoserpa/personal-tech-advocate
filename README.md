@@ -43,8 +43,8 @@ You will need Python 3.10+ and the `uv` package manager installed.
 ### 2. Installation
 Clone the repository and install the dependencies:
 ```bash
-git clone https://github.com/leoserpa/agno_novo.git
-cd agno_novo
+git clone https://github.com/leoserpa/personal-tech-advocate.git
+cd personal-tech-advocate
 uv sync
 ```
 
@@ -99,8 +99,8 @@ Você precisará do Python 3.10+ e do gerenciador de pacotes `uv` instalado.
 ### 2. Instalação
 Clone o repositório e instale as dependências:
 ```bash
-git clone https://github.com/leoserpa/agno_novo.git
-cd agno_novo
+git clone https://github.com/leoserpa/personal-tech-advocate.git
+cd personal-tech-advocate
 uv sync
 ```
 
