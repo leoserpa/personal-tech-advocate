@@ -20,6 +20,10 @@
 
 # 🇺🇸 English Version
 
+## 🚀 Live Demo
+Test the autonomous headhunter right now in your browser:
+[**Streamlit Cloud App**](https://personal-tech-advocate-qxsemfmgy2chcef7xqjkga.streamlit.app/)
+
 ## 📖 About the Project
 **Personal Tech Advocate** is an autonomous multi-agent recruitment platform powered by **Agno** and **Streamlit**. It acts as an elite technical headhunter, automatically scanning a candidate's public GitHub repositories to assess their coding skills, business acumen, and cultural fit for Data Science and Engineering roles. 
 
@@ -75,6 +79,10 @@ Type any GitHub username (e.g., `leoserpa`) in the chat to start the autonomous 
 <br><br>
 
 # 🇧🇷 Versão em Português
+
+## 🚀 Aplicação ao Vivo (Live Demo)
+Teste o headhunter autônomo agora mesmo no seu navegador:
+[**Acessar App no Streamlit**](https://personal-tech-advocate-qxsemfmgy2chcef7xqjkga.streamlit.app/)
 
 ## 📖 Sobre o Projeto
 O **Personal Tech Advocate** é uma plataforma de recrutamento multi-agente autônoma alimentada por **Agno** e **Streamlit**. Ele atua como um headhunter técnico de elite, rastreando automaticamente os repositórios públicos de um candidato no GitHub para avaliar suas habilidades de código, visão de negócios e aderência ('fit') para vagas de Ciência de Dados e Engenharia.
