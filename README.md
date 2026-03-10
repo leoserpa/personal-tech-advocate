@@ -29,6 +29,12 @@ Test the autonomous headhunter right now in your browser:
 
 Instead of relying on basic LLM summaries, the system delegates the workload to a strict hierarchy of AI specialized agents (A Team Leader, a Senior Code Reviewer, and a Product Manager) to provide an un-biased, deep-dive recruitment dossier.
 
+<div align="center">
+  <img src="assets/demo-ui.png" alt="Personal Tech Advocate UI" width="800">
+  <br><br>
+  <img src="assets/demo-radar.png" alt="AI Generated Radar Chart" width="800">
+</div>
+
 ## ✨ Features
 - **Multi-Agent Architecture:** Powered by three distinct AI personas analyzing code quality vs. business value.
 - **Job Description Matcher:** Paste a job requirement and the AI will calculate a precise `Match Score (%)` identifying strengths and skill gaps.
@@ -88,6 +94,12 @@ Teste o headhunter autônomo agora mesmo no seu navegador:
 O **Personal Tech Advocate** é uma plataforma de recrutamento multi-agente autônoma alimentada por **Agno** e **Streamlit**. Ele atua como um headhunter técnico de elite, rastreando automaticamente os repositórios públicos de um candidato no GitHub para avaliar suas habilidades de código, visão de negócios e aderência ('fit') para vagas de Ciência de Dados e Engenharia.
 
 Em vez de depender de resumos básicos de IA, o sistema delega o trabalho a uma hierarquia estrita de agentes especializados em IA (Um Gerente de Equipe, um Senior Code Reviewer e uma Product Manager) para fornecer um dossiê de recrutamento imparcial e profundo.
+
+<div align="center">
+  <img src="assets/demo-ui.png" alt="Interface Principal do Recrutador IA" width="800">
+  <br><br>
+  <img src="assets/demo-radar.png" alt="Gráfico Radial gerado pelo Agente" width="800">
+</div>
 
 ## ✨ Funcionalidades
 - **Arquitetura Multi-Agente:** Alimentado por três personas distintas de IA avaliando qualidade de código vs. valor de negócio.
