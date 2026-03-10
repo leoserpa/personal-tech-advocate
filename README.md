@@ -2,6 +2,12 @@
   <h1>🤖 Personal Tech Advocate</h1>
   <p><strong>Autonomous AI Headhunter Team & Technical Assessor</strong></p>
   <p>
+    <img src="https://img.shields.io/badge/Made%20with-Python-1f425f.svg" alt="Python">
+    <img src="https://img.shields.io/badge/Powered%20by-Agno-blue" alt="Agno">
+    <img src="https://img.shields.io/badge/UI-Streamlit-FF4B4B" alt="Streamlit">
+    <img src="https://img.shields.io/badge/License-MIT-green.svg" alt="License">
+  </p>
+  <p>
     <a href="#-english-version">English</a> • <a href="#-versão-em-português">Português</a>
   </p>
 </div>
